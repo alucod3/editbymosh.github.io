@@ -57,10 +57,10 @@ function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) 
 
 export function Stats() {
   return (
-    <section className="border-y border-border bg-card/50 px-6 py-16">
-      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4">
+    <section className="section-scanline border-y border-neon/[0.06] px-6 py-16">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 md:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
+          <div key={stat.label} className="glass-card flex flex-col items-center gap-2 rounded-xl p-6 text-center">
             <AnimatedNumber target={stat.value} suffix={stat.suffix} />
             <span className="text-sm text-muted-foreground">{stat.label}</span>
           </div>

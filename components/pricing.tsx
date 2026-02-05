@@ -83,10 +83,10 @@ export function Pricing() {
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-2xl border p-6 transition-all duration-300 hover:shadow-[0_0_30px_rgba(200,255,0,0.08)] ${
+              className={`relative flex flex-col rounded-2xl p-6 transition-all duration-300 ${
                 tier.popular
-                  ? "border-neon/40 bg-card neon-border-glow"
-                  : "border-border bg-card hover:border-neon/20"
+                  ? "glass-neon neon-border-glow"
+                  : "glass-card"
               }`}
             >
               {/* Popular Badge */}
@@ -100,7 +100,7 @@ export function Pricing() {
 
               {/* Icon & Name */}
               <div className="mb-6 flex flex-col items-center text-center">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-secondary">
+                <div className="glass-btn mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
                   <tier.icon size={22} className="text-neon" />
                 </div>
                 <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
@@ -139,7 +139,7 @@ export function Pricing() {
                 className={`flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold transition-all ${
                   tier.popular
                     ? "bg-neon text-background hover:shadow-[0_0_20px_rgba(200,255,0,0.4)]"
-                    : "border border-border bg-secondary text-foreground hover:border-neon/30"
+                    : "glass-btn text-foreground"
                 }`}
               >
                 Get Started

@@ -46,20 +46,123 @@
   }
 }
 
-/* Neon glow utilities */
-.neon-glow {
-  text-shadow: 0 0 10px rgba(200, 255, 0, 0.5), 0 0 40px rgba(200, 255, 0, 0.2);
+/* ============================
+   GRID BACKGROUND
+   ============================ */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(200, 255, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 255, 0, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-.neon-box-glow {
-  box-shadow: 0 0 20px rgba(200, 255, 0, 0.15), 0 0 60px rgba(200, 255, 0, 0.05);
+.grid-fade {
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* ============================
+   GLASSMORPHISM
+   ============================ */
+.glass-neon {
+  background: rgba(200, 255, 0, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 255, 0, 0.12);
+}
+
+.glass-btn {
+  background: rgba(200, 255, 0, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 255, 0, 0.12);
+  transition: all 0.3s ease;
+}
+.glass-btn:hover {
+  background: rgba(200, 255, 0, 0.1);
+  border-color: rgba(200, 255, 0, 0.25);
+  box-shadow: 0 0 25px rgba(200, 255, 0, 0.1), inset 0 0 25px rgba(200, 255, 0, 0.03);
+}
+
+.glass-card {
+  background: rgba(241, 241, 241, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(241, 241, 241, 0.05);
+  transition: all 0.4s ease;
+}
+.glass-card:hover {
+  background: rgba(241, 241, 241, 0.04);
+  border-color: rgba(200, 255, 0, 0.15);
+  box-shadow: 0 0 30px rgba(200, 255, 0, 0.06);
+}
+
+/* ============================
+   NEON GLOWS
+   ============================ */
+.neon-glow {
+  text-shadow: 0 0 10px rgba(200, 255, 0, 0.5), 0 0 40px rgba(200, 255, 0, 0.2);
 }
 
 .neon-border-glow {
   box-shadow: inset 0 0 20px rgba(200, 255, 0, 0.03), 0 0 15px rgba(200, 255, 0, 0.1);
 }
 
-/* Scroll animation */
+/* ============================
+   VIDEO EDITING "CUT" TRANSITION
+   Simulates a clean NLE timeline cut with
+   a horizontal wipe — like a razor blade slice.
+   ============================ */
+
+@keyframes cut-in {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes cut-out {
+  0% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+    opacity: 0;
+  }
+}
+
+.animate-cut-in {
+  animation: cut-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-cut-out {
+  animation: cut-out 0.35s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+/* Cursor / playhead blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+/* ============================
+   GENERAL ANIMATIONS
+   ============================ */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -78,12 +181,56 @@
   animation: pulse-neon 2s ease-in-out infinite;
 }
 
-/* Smooth scroll */
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* VHS noise overlay */
+@keyframes vhs-noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5% -10%; }
+  20% { background-position: -15% 5%; }
+  30% { background-position: 7% -25%; }
+  40% { background-position: -5% 25%; }
+  50% { background-position: -15% 10%; }
+  60% { background-position: 15% 0%; }
+  70% { background-position: 0% 15%; }
+  80% { background-position: 3% 35%; }
+  90% { background-position: -10% 10%; }
+}
+
+.vhs-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  animation: vhs-noise 0.2s steps(10) infinite;
+}
+
+/* Section divider scanline */
+.section-scanline {
+  position: relative;
+}
+.section-scanline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 255, 0, 0.2), rgba(200, 255, 0, 0.5), rgba(200, 255, 0, 0.2), transparent);
+}
+
+/* ============================
+   SCROLLBAR & SMOOTH SCROLL
+   ============================ */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }

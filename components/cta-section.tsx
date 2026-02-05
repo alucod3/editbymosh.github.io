@@ -4,12 +4,12 @@ export function CTASection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden px-6 py-24 md:py-32"
+      className="section-scanline relative overflow-hidden px-6 py-24 md:py-32"
     >
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-neon/[0.02] to-background" />
-        <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/5 blur-[100px]" />
+        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/5 blur-[120px]" />
       </div>
 
       <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">

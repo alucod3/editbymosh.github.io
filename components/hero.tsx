@@ -1,21 +1,41 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { ArrowDown, Zap, Clock, MessageCircle } from "lucide-react"
 
-const roles = ["Video Editor", "Thumbnail Designer", "Motion Artist", "Content Creator"]
+const roles = ["Video Edits", "Thumbnails", "Motion Design", "Short-Form"]
 
 export function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
+  const [transitionPhase, setTransitionPhase] = useState<"visible" | "cut-out" | "cut-in">("visible")
+  const [displayedRole, setDisplayedRole] = useState(roles[0])
 
   useEffect(() => {
     setIsVisible(true)
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length)
-    }, 2500)
-    return () => clearInterval(interval)
   }, [])
+
+  const cycleRole = useCallback(() => {
+    setTransitionPhase("cut-out")
+
+    setTimeout(() => {
+      setRoleIndex((prev) => {
+        const next = (prev + 1) % roles.length
+        setDisplayedRole(roles[next])
+        return next
+      })
+      setTransitionPhase("cut-in")
+    }, 400)
+
+    setTimeout(() => {
+      setTransitionPhase("visible")
+    }, 900)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(cycleRole, 3000)
+    return () => clearInterval(interval)
+  }, [cycleRole])
 
   return (
     <section
@@ -24,8 +44,7 @@ export function Hero() {
     >
       {/* Background Effects */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/4 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/5 blur-[120px]" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/20 to-transparent" />
+        <div className="absolute left-1/2 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/5 blur-[150px]" />
       </div>
 
       <div
@@ -33,27 +52,52 @@ export function Hero() {
           isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
       >
-        {/* Availability Badge */}
-        <div className="mb-8 flex items-center gap-2 rounded-full border border-neon/20 bg-neon/5 px-4 py-1.5">
-          <span className="h-2 w-2 animate-pulse-neon rounded-full bg-neon" />
-          <span className="text-xs font-medium text-neon">Available for New Projects</span>
+        {/* Available badge */}
+        <div className="mb-8">
+          <div className="glass-btn flex items-center gap-2 rounded-full px-4 py-1.5">
+            <span className="h-2 w-2 animate-pulse-neon rounded-full bg-neon" />
+            <span className="text-xs font-medium text-neon">Available for Projects</span>
+          </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="font-heading text-5xl font-bold leading-tight tracking-tight text-foreground md:text-7xl lg:text-8xl">
-          <span className="text-balance">
-            {"I Craft "}
-            <span className="neon-glow text-neon">{roles[roleIndex]}</span>
-            {" Content"}
+        <h1 className="font-heading text-5xl font-bold leading-[1.1] tracking-tight text-foreground md:text-7xl lg:text-8xl">
+          I Craft{" "}
+          <span className="relative inline-flex items-baseline">
+            <span
+              className={`inline-block whitespace-nowrap text-neon ${
+                transitionPhase === "cut-out"
+                  ? "animate-cut-out"
+                  : transitionPhase === "cut-in"
+                    ? "animate-cut-in neon-glow"
+                    : "neon-glow"
+              }`}
+            >
+              {displayedRole}
+            </span>
+            <span className="animate-cursor-blink ml-1 inline-block h-[0.8em] w-[3px] bg-neon" />
           </span>
         </h1>
 
+        {/* Timeline progress bar */}
+        <div className="mt-6 flex w-full max-w-xs items-center gap-3">
+          <div className="h-[2px] flex-1 overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full rounded-full bg-neon/60 transition-all duration-500"
+              style={{ width: `${((roleIndex + 1) / roles.length) * 100}%` }}
+            />
+          </div>
+          <span className="font-mono text-[10px] text-muted-foreground">
+            {roleIndex + 1}/{roles.length}
+          </span>
+        </div>
+
         {/* Subtitle */}
-        <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
           I create{" "}
           <span className="font-medium text-foreground">scroll-stopping thumbnails</span>,{" "}
           <span className="font-medium text-foreground">cinematic long-form edits</span>, and{" "}
-          <span className="font-medium text-foreground">viral short-form content</span> {" "}
+          <span className="font-medium text-foreground">viral short-form content</span>{" "}
           with clean, professional editing and impactful storytelling.
         </p>
 
@@ -66,7 +110,7 @@ export function Hero() {
           ].map((badge) => (
             <div
               key={badge.label}
-              className="flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2"
+              className="glass-btn flex items-center gap-2 rounded-full px-4 py-2"
             >
               <badge.icon size={14} className="text-neon" />
               <span className="text-xs font-medium text-foreground">{badge.label}</span>
@@ -89,7 +133,7 @@ export function Hero() {
           </a>
           <a
             href="#work"
-            className="flex items-center gap-2 rounded-full border border-border bg-secondary px-7 py-3.5 text-sm font-medium text-foreground transition-all hover:border-neon/30 hover:bg-secondary"
+            className="glass-btn flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium text-foreground"
           >
             View My Work
             <ArrowDown size={14} />

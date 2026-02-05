@@ -72,7 +72,7 @@ export function Portfolio() {
               className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
                 activeCategory === cat.key
                   ? "bg-neon text-background shadow-[0_0_15px_rgba(200,255,0,0.3)]"
-                  : "border border-border bg-secondary text-muted-foreground hover:border-neon/30 hover:text-foreground"
+                  : "glass-btn text-muted-foreground hover:text-foreground"
               }`}
             >
               <cat.icon size={14} />
@@ -98,7 +98,7 @@ export function Portfolio() {
               <Wrapper
                 key={item.id}
                 {...wrapperProps}
-                className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-neon/30 hover:shadow-[0_0_30px_rgba(200,255,0,0.08)]"
+                className="glass-card group relative overflow-hidden rounded-xl transition-all duration-300"
               >
                 {/* Image Container */}
                 <div className="relative aspect-video overflow-hidden">

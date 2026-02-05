@@ -15,7 +15,7 @@ const _inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Creative Studio | Video Editor & Thumbnail Designer",
+  title: "editbymosh | Video Editor & Thumbnail Designer",
   description:
     "Professional video editing and thumbnail design services. High-energy short-form, cinematic long-form, and click-worthy thumbnails for content creators.",
 }

@@ -11,7 +11,7 @@ export function MarqueeBanner() {
   ]
 
   return (
-    <div className="relative overflow-hidden border-y border-border bg-neon/[0.03] py-4">
+    <div className="section-scanline relative overflow-hidden border-y border-neon/[0.06] py-4">
       <div className="flex animate-marquee gap-8 whitespace-nowrap">
         {[...items, ...items].map((item, i) => (
           <span

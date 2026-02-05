@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="border-t border-border px-6 py-8">
+    <footer className="border-t border-neon/[0.06] px-6 py-8">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 md:flex-row">
         <div className="flex items-center gap-1 font-heading text-sm font-bold text-foreground">
           edit<span className="text-neon">by</span>mosh
